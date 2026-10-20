@@ -29,6 +29,13 @@ Hand-rolled Content-Type parsing tends to forget one of three things: trimming w
 - **No `/`.** A media type without a slash yields an empty subtype (`parseContentType('application')` → `{ type: 'application', subtype: '', parameters: {} }`).
 - **Escaped quotes.** Inside a quoted value, `\"` is unescaped to `"`.
 
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
+
 ## License
 
 MIT.
